@@ -116,7 +116,7 @@ console.log(catalyst.compose(12));
                   "{
                     (() => {
                       const prefix =
-                        artStyle === 'bauhaus' ? '바우하우스 기하학으로 재해석된 이 작품은 ' :
+                        artStyle === 'kandinsky' ? '바실리 칸딘스키의 추상적 선과 면으로 재해석된 이 작품은 ' :
                           artStyle === 'vangogh' ? '반 고흐의 소용돌이치는 붓터치로 완성된 이 캔버스는 ' :
                             artStyle === 'monet' ? '모네의 빛의 번짐으로 녹아든 이 인상파 작품은 ' :
                               artStyle === 'dali' ? '달리의 꿈 같은 초현실적 세계관으로 표현된 이 작품은 ' :

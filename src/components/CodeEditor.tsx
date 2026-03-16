@@ -22,7 +22,7 @@ export type SupportedLanguage =
     | 'html'
     | 'css';
 
-export type BaseArtStyle = 'bauhaus' | 'vangogh' | 'monet' | 'dali' | 'basquiat';
+export type BaseArtStyle = 'kandinsky' | 'vangogh' | 'monet' | 'dali' | 'basquiat';
 export type ArtStyle = BaseArtStyle | 'auto';
 
 interface StyleInfo {
@@ -47,12 +47,12 @@ export const ART_STYLE_INFO: Record<ArtStyle, StyleInfo> = {
         palette: ['#E63946', '#F4D03F', '#85C1AE', '#1E3A5F', '#1C1C1C'],
         isAuto: true
     },
-    bauhaus: {
-        label: '바우하우스',
-        artist: '파울 클레 / 칸딘스키',
-        movement: '바우하우스 (1919~1933)',
-        description: '기본 도형(원·삼각·사각)과 원색의 정밀한 레이아웃. 장식을 배제한 기능과 미의 통일.',
-        keywords: '기하학 · 원색 · 정밀함 · 질서',
+    kandinsky: {
+        label: '바실리 칸딘스키',
+        artist: '바실리 칸딘스키',
+        movement: '추상미술 (Abstract Art)',
+        description: '점·선·면의 상호작용과 색채의 음악적 울림. 기하학적 형태와 선의 리듬이 어우러진 순수 추상.',
+        keywords: '추상 · 리듬 · 점선면 · 음악적',
         imageUrl: 'https://img.wikioo.org/ADC/Art-ImgScreen-2.nsf/O/A-5ZKCWA/$FILE/Wassily-kandinsky-yellow-red-blue.Jpg',
         palette: ['#E63946', '#457B9D', '#F4D03F', '#1D3557', '#FFFFFF']
     },
@@ -107,11 +107,11 @@ export const ART_STYLE_INFO: Record<ArtStyle, StyleInfo> = {
 export function resolveAutoStyle(metrics: CodeMetrics): BaseArtStyle {
     const { complexity, consistency, sentiment, coupling, cohesion, readability, paradigm } = metrics;
 
-    // Clean, well-structured code → Bauhaus
-    if (complexity < 0.3 && consistency > 0.6) return 'bauhaus';
+    // Pure abstraction, clean geometric code → Kandinsky
+    if (complexity < 0.3 && consistency > 0.6) return 'kandinsky';
 
-    // Highly consistent + low complexity + good readability → still Bauhaus
-    if (consistency > 0.75 && complexity < 0.45 && readability > 0.55) return 'bauhaus';
+    // Highly consistent + low complexity + good readability → still Kandinsky
+    if (consistency > 0.75 && complexity < 0.45 && readability > 0.55) return 'kandinsky';
 
     // Positive, warm, readable code → Monet
     if (sentiment > 0.65 && complexity < 0.6 && readability > 0.5) return 'monet';

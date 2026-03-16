@@ -42,7 +42,7 @@ export default function AiGenerator({
     const resolvedStyleInfo = ART_STYLE_INFO[resolvedStyle];
 
     const styleNames: Record<string, string> = {
-        bauhaus: '바우하우스(파울 클레/칸딘스키)',
+        kandinsky: '바실리 칸딘스키(추상미술)',
         vangogh: '빈센트 반 고흐(후기인상주의)',
         monet: '클로드 모네(인상주의)',
         dali: '살바도르 달리(초현실주의)',
@@ -50,7 +50,7 @@ export default function AiGenerator({
     };
 
     const styleDescriptions: Record<string, string> = {
-        bauhaus: `Bauhaus style: strict geometric composition using only pure primary colors (red, blue, yellow) and neutrals (black, white, gray). Perfectly balanced circles, triangles, and rectangles arranged with mathematical precision on a clean flat surface. No gradients, no textures — pure form and pure color. The composition should feel like a functional blueprint elevated into fine art.`,
+        kandinsky: `Wassily Kandinsky Abstract style: a musical composition of pure abstraction. Floating circles, sharp triangles, and intersecting lines that create a rhythmic sense of movement. Geometric forms scattered across a vast, ethereal background with a focus on 'inner necessity'. Bold primary colors vibrate like musical notes. The composition is an orchestra of points, lines, and planes interacting in an non-objective, spiritual space.`,
         vangogh: `Vincent van Gogh Post-Impressionist style: thick, heavily impastoed, swirling and spiraling brushstrokes that dynamically fill the entire canvas with kinetic energy. Deep ultramarine and cobalt blues boldly contrasted against burning cadmium yellows and warm ochres. Every mark is a passionate, directional, tactile gesture. The sky and forms vibrate and rotate with inner life.`,
         monet: `Claude Monet Impressionist style: soft, loose, flickering dabs and feathery strokes of color that dissolve hard edges into shimmering light. The palette is luminous — rose, lavender, powder blue, golden yellow, and sage green — all bleeding into each other at the boundaries. The surface feels like a reflection on gently rippling water, atmospheric and dreamlike, full of warmth and natural light.`,
         dali: `Salvador Dalí Surrealist style: hyper-realistic, academically precise oil-painting technique applied to a dreamscape that defies spatial logic. Forms melt, stretch, and morph impossibly. A vast, barren desert-golden landscape forms the backdrop with deep theatrical shadows. Elements float and defy gravity. Despite the impossible content, every detail is rendered with photographic exactitude.`,
@@ -60,87 +60,107 @@ export default function AiGenerator({
     const getImagePrompt = () => {
         const { complexity: comp, cohesion: coh, consistency: cons, coupling: coup, depth, readability, sentiment, paradigm } = metrics;
 
-        // 5-level Complexity
-        const complexityStr =
-            comp > 0.8 ? "overwhelmingly complex, densely fragmented, and intricately layered — every inch of the canvas filled with restless, turbulent energy"
-                : comp > 0.6 ? "highly complex, heavily layered with many competing elements, rhythmically turbulent"
-                    : comp > 0.4 ? "moderately complex with balanced tension between order and chaos"
-                        : comp > 0.2 ? "mostly calm and structured, with only subtle variations and sparse details"
-                            : "strikingly minimalist and pristine, with extreme negative space and pure essential shapes";
+        // --- Style-Specific Descriptors ---
+        const getDescriptors = () => {
+            switch (resolvedStyle) {
+                case 'kandinsky':
+                    return {
+                        complexity: comp > 0.8 ? "a dense, symphonic explosion of overlapping floating geometric symbols, a hyper-active orchestra of points, triangles, and arcs"
+                            : comp > 0.6 ? "an intricate rhythmic arrangement of multiple geometric layers and intersecting linear paths"
+                                : comp > 0.4 ? "a balanced abstract composition with dynamic tension between different geometric clusters"
+                                    : comp > 0.2 ? "a sparse, melodic layout with a few primary shapes floating in a vast, open space"
+                                        : "a singular pure point or line, representing the fundamental spiritual essence of form",
+                        cohesion: coh > 0.75 ? "converging toward a powerful magnetic core of heavy circular forms that anchor the visual melody" : "a decentralized, floating field of elements with independent inner rhythms",
+                        consistency: "vibrant musical color vibration featuring primary hues that resonate like chords against a clean background",
+                        depth: depth > 0.5 ? "an ethereal, spiritual depth where forms float in multiple atmospheric planes" : "a flat, non-objective space focused on the purity of surface interaction",
+                        marks: "sharp, thin-to-thick rhythmic lines and perfectly defined geometric perimeters"
+                    };
+                case 'vangogh':
+                    return {
+                        complexity: comp > 0.8 ? "a violent, ecstatic explosion of swirling impasto, every millimeter vibrating with thick, restless, multi-directional dashes"
+                            : comp > 0.6 ? "rhythmic, flowing rivers of paint, creating a sense of constant movement and energetic growth"
+                                : comp > 0.4 ? "balanced energy, with confident patches of color and steady, visible brushwork rhythm"
+                                    : comp > 0.2 ? "mostly calm with long, serene horizontal strokes and occasional subtle dabs"
+                                        : "sparse, quiet strokes on a raw-looking base, representing total mental clarity",
+                        cohesion: coh > 0.75 ? "an immense gravitational vortex pulling all strokes into a tight, spiraling central sun" : "fragmented energy spread across the canvas in independent eddies",
+                        consistency: "intense complementary vibration of deep cyprus blues and radiant sunflower yellows",
+                        depth: depth > 0.5 ? "powerful receding spatial tunnels created by swirling directional perspective" : "thick, tactile surface tension with no background",
+                        marks: "tactile, heavy impasto dabs applied with high-pressure intensity"
+                    };
+                case 'monet':
+                    return {
+                        complexity: comp > 0.8 ? "a shimmering, hyper-dense surface vibrating with ten thousand tiny dabs of pure, unmixed light and color"
+                            : comp > 0.6 ? "an intricate garden landscape of overlapping lily pads and bridge reflections with complex textures"
+                                : comp > 0.4 ? "a balanced impressionist view with rhythmic color patches and visible light flickering"
+                                    : comp > 0.2 ? "a soft, hazy dawn landscape with gentle washes of light and only a few subtle dabs"
+                                        : "an ethereal, almost abstract mist of a single morning hue, quiet and minimalist",
+                        cohesion: coh > 0.8 ? "a radiant central luminous core where all light converged into a blinding reflection on water"
+                            : coh > 0.6 ? "a soft focal point where light dabs form a visible cluster of energy"
+                                : coh > 0.4 ? "a gentle rhythmic balance with light spread in organized clusters"
+                                    : "fully diffused light spread evenly across the misty pond surface with no center",
+                        consistency: "harmonious pastel palette of translucent, overlapping tints of violet, rose, and sage",
+                        depth: depth > 0.5 ? "ethereal atmospheric perspective with soft receding water horizons" : "flat decorative surface of light reflections on water",
+                        marks: "soft, blurry, and overlapping short dabs of pure color applied with a light touch"
+                    };
+                case 'dali':
+                    return {
+                        complexity: comp > 0.8 ? "a nightmarish, hyper-detailed landscape of melting towers, distorted faces, and impossible interlocking mechanisms"
+                            : comp > 0.6 ? "a dense surrealist construction of warped perspectives and multiple melting icons"
+                                : comp > 0.4 ? "a balanced dreamscape with several melting objects and sharp, long shadows"
+                                    : comp > 0.2 ? "a vast, empty desert void with a single strange, isolated melting artifact"
+                                        : "a pure, flat infinite horizon under a single suspended floating orb, extremely sparse",
+                        cohesion: coh > 0.8 ? "a surreal dream-like convergence where all melting objects fuse into a single impossible central monument"
+                            : coh > 0.6 ? "a clear focal point formed by a cluster of distorted shapes emerging from the desert"
+                                : "objects floating in complete logical isolation in a vast desert vacuum",
+                        consistency: "theatrical, high-contrast lighting with deep, sharp shadows and vibrant, oversaturated desert hues",
+                        depth: depth > 0.5 ? "infinite receding horizon line with extreme, logically impossible spatial depth" : "flat, dream-like stage set with no background",
+                        marks: "hyper-realistic, sharp rendering of fluid and distorted forms"
+                    };
+                case 'basquiat':
+                    return {
+                        complexity: comp > 0.8 ? "an explosive urban chaos, hyper-dense layers of aggressive spray-paint, oil-stick words, and primitive symbols"
+                            : comp > 0.6 ? "intricate street-art layering of skeletal figures, scribbles, and heavy text fragments"
+                                : comp > 0.4 ? "a balanced expressionist wall of raw marks and primitive urban icons"
+                                    : comp > 0.2 ? "sparse markings, a single primitive figure on a plain, textured wall"
+                                        : "one single, bold, skeletal stroke on a raw background, extremely minimalist",
+                        cohesion: coh > 0.8 ? "commanded by a massive, central primitive crown icon that dominates the entire wall"
+                            : coh > 0.6 ? "a strong focal point where symbols and words cluster around a central figure"
+                                : "fully dispersed energy, chaotic markings spread like a street wall with no hierarchy",
+                        consistency: "clashing primary colors, dirty charcoal blacks, and layered spray-paint textures",
+                        depth: depth > 0.5 ? "heavily collaged layers of overpainting and scratched-away surfaces" : "flat, raw, immediate wall-like surface",
+                        marks: "expressive, childlike, and primal grease-crayon lines applied with raw speed"
+                    };
+                default:
+                    return {
+                        complexity: "balanced tension between order and chaos",
+                        cohesion: "unified focal point",
+                        consistency: "harmonious color distribution",
+                        depth: "subtle layered depth",
+                        marks: "confident and expressive marks"
+                    };
+            }
+        };
 
-        // 5-level Cohesion
-        const cohesionStr =
-            coh > 0.8 ? "with a single, magnetic, dominant focal point that anchors the entire composition with immense gravitational force"
-                : coh > 0.6 ? "with a strong unified center of gravity, all elements pulling toward a clear visual core"
-                    : coh > 0.4 ? "with loosely connected clusters of elements, hinting at a theme but allowing free breathing room"
-                        : coh > 0.2 ? "with scattered and independent elements drifting freely without clear hierarchy"
-                            : "with completely dispersed, atomized, and isolated fragments spread without any discernible center";
+        const d = getDescriptors();
 
-        // 5-level Consistency
-        const consistencyStr =
-            cons > 0.8 ? "using an extremely disciplined and minimal palette of 2–3 carefully curated harmonious tones"
-                : cons > 0.6 ? "using a controlled, cohesive palette with deliberately chosen complementary hues"
-                    : cons > 0.4 ? "using a moderately varied palette with occasional surprising but not jarring color accents"
-                        : cons > 0.2 ? "using boldly contrasting and clashing colors that create visual friction and dynamic tension"
-                            : "using wildly unpredictable, almost random color combinations that boldly reject conventional harmony";
+        // Metric-based modifiers that refine the style
+        const intensity = comp > 0.7 ? "overwhelmingly intense and dense" : comp < 0.3 ? "minimalist and serene" : "balanced";
+        const flow = readability > 0.5 ? "confident and fluid" : "fractured and staccato";
 
-        // 5-level Coupling
-        const couplingStr =
-            coup > 0.8 ? "with all shapes densely interlocked, tangled in a complex web of mutual dependencies that fills every gap"
-                : coup > 0.6 ? "with many intertwining elements and overlapping compositional threads"
-                    : coup > 0.4 ? "with some elements connected by thin visual bridges while others remain self-contained"
-                        : coup > 0.2 ? "with mostly independent, cleanly separated forms that coexist without touching"
-                            : "with fully isolated, self-contained geometric islands floating silently in open space";
+        const prompt = `Create a museum-quality masterpiece in the style of ${styleDescriptions[resolvedStyle]}.
+        
+Compositional energy: ${intensity}, representing code complexity (${comp.toFixed(2)}).
+Core Structure: ${d.complexity}.
+Focal Point: ${d.cohesion}, reflecting cohesion (${coh.toFixed(2)}).
+Color & Tone: ${d.consistency}, reflecting consistency (${cons.toFixed(2)}).
+Spatial Feel: ${d.depth}, reflecting depth (${depth.toFixed(2)}).
+Forms and Brushwork: Rendered with ${d.marks} in a ${flow} rhythm.
 
-        // 4-level Depth
-        const depthStr =
-            depth > 0.75 ? "a powerful tunnel-like depth effect, pulling the viewer's eye through multiple receding layers into a vast spatial interior"
-                : depth > 0.5 ? "a noticeable sense of layered depth and overlapping planes creating dimensional space"
-                    : depth > 0.25 ? "a subtle interplay of foreground and background suggesting gentle spatial depth"
-                        : "a completely flat, 2D planar surface with even, non-receding color fields";
-
-        // 4-level Readability
-        const readStr =
-            readability > 0.75 ? "long, grand sweeping brushstrokes with confident, mature, and deliberate gesture"
-                : readability > 0.5 ? "flowing and organic lines with natural, expressive rhythm"
-                    : readability > 0.25 ? "short, staccato marks with angular and slightly tense directional strokes"
-                        : "tiny, tight, fractured marks — almost like a coded cipher or intricate cross-hatching";
-
-        // 4-level Sentiment — no violent imagery
-        const sentStr =
-            sentiment > 0.75 ? "luminous, radiant, and uplifting — bathed in warm golden light with an ethereal, hopeful glow"
-                : sentiment > 0.5 ? "gently warm and optimistic with soft, pleasant light diffused across the surface"
-                    : sentiment > 0.25 ? "subdued, introspective, and quietly melancholic with muted tones and cool shadows"
-                        : "somber and brooding, with heavy dark tones, faded grays, and a contemplative, world-weary atmosphere";
-
-        // Paradigm
-        const paradigmStr = paradigm === 'oop'
-            ? "structured with heavy, monumental, and clearly defined block-like classical forms establishing a clear hierarchy of visual weight"
-            : paradigm === 'fp' ? "built from continuous, flowing, pipe-like curves that loop and connect in an unbroken data-stream rhythm"
-                : "assembled from direct, raw, fundamental shapes without ornamental abstraction";
-
-        return `[Code Metrics Breakdown]
-- Complexity (${comp.toFixed(2)}): ${complexityStr}
-- Cohesion (${coh.toFixed(2)}): ${cohesionStr}
-- Consistency (${cons.toFixed(2)}): ${consistencyStr}
-- Coupling (${coup.toFixed(2)}): ${couplingStr}
-- Depth (${depth.toFixed(2)}): ${depthStr}
-- Readability (${readability.toFixed(2)}): ${readStr}
-- Sentiment (${sentiment.toFixed(2)}): ${sentStr}
-- Paradigm (${paradigm}): ${paradigmStr}
-
-Create a masterpiece painting in the style of ${styleDescriptions[resolvedStyle]}.
-
-Composition: ${complexityStr}, ${cohesionStr}.
-Spatial feel: ${depthStr}.
-Color palette: ${consistencyStr}.
-Atmosphere and mood: ${sentStr}.
-Structural connectivity: ${couplingStr}.
-Forms and marks: ${paradigmStr}, rendered with ${readStr}.
-
-Make it a beautiful, high-quality, gallery-worthy artwork representing the hidden architecture and emotions of this computer program.
+Theme: This is a visualization of a computer program's logic. Let the hidden architecture of the code emerge through the ${styleNames[resolvedStyle]} aesthetic.
 
 **CRITICAL INSTRUCTION**: The resulting image MUST be the raw artwork only. DO NOT include any frames, borders, easels, walls, gallery rooms, or surrounding environments. Fill the entire image edge-to-edge with the painting itself. No text in the image.`;
+
+        return prompt;
     };
 
     const getDocentPrompt = () => {
