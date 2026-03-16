@@ -62,81 +62,225 @@ export default function AiGenerator({
 
         // --- Style-Specific Descriptors ---
         const getDescriptors = () => {
+            const getLvl5 = (v: number) => v > 0.8 ? 4 : v > 0.6 ? 3 : v > 0.4 ? 2 : v > 0.2 ? 1 : 0;
+            const getLvl3 = (v: number) => v > 0.66 ? 2 : v > 0.33 ? 1 : 0;
+
             switch (resolvedStyle) {
                 case 'kandinsky':
                     return {
-                        complexity: comp > 0.8 ? "a dense, symphonic explosion of overlapping floating geometric symbols, a hyper-active orchestra of points, triangles, and arcs"
-                            : comp > 0.6 ? "an intricate rhythmic arrangement of multiple geometric layers and intersecting linear paths"
-                                : comp > 0.4 ? "a balanced abstract composition with dynamic tension between different geometric clusters"
-                                    : comp > 0.2 ? "a sparse, melodic layout with a few primary shapes floating in a vast, open space"
-                                        : "a singular pure point or line, representing the fundamental spiritual essence of form",
-                        cohesion: coh > 0.75 ? "converging toward a powerful magnetic core of heavy circular forms that anchor the visual melody" : "a decentralized, floating field of elements with independent inner rhythms",
-                        consistency: "vibrant musical color vibration featuring primary hues that resonate like chords against a clean background",
-                        depth: depth > 0.5 ? "an ethereal, spiritual depth where forms float in multiple atmospheric planes" : "a flat, non-objective space focused on the purity of surface interaction",
-                        marks: "sharp, thin-to-thick rhythmic lines and perfectly defined geometric perimeters"
+                        complexity: [
+                            "a singular spiritual point, representing the fundamental essence of form",
+                            "a sparse, melodic layout with a few primary shapes floating in open space",
+                            "a balanced abstract composition with dynamic tension between geometric clusters",
+                            "an intricate rhythmic arrangement of multiple geometric layers and intersecting paths",
+                            "a dense, symphonic explosion of overlapping floating geometric symbols, an orchestra of points and arcs"
+                        ][getLvl5(comp)],
+                        cohesion: [
+                            "fully dispersed energy, with points and lines vibrating in independent isolation",
+                            "a loose rhythmic cluster suggesting a subtle shared gravitational pull",
+                            "converging toward a powerful magnetic core of heavy circular forms"
+                        ][getLvl3(coh)],
+                        consistency: [
+                            "a wild, improvisational clash of dissonant, vibrating colors and irregular forms",
+                            "a balanced interaction of complementary hues and varied geometric weights",
+                            "a strict, spiritual harmonic palette of pure primary chords and disciplined lines"
+                        ][getLvl3(cons)],
+                        coupling: [
+                            "isolated geometric islands floating in a vast void without visual contact",
+                            "elements subtly connected by proximity and invisible harmonic corridors",
+                            "shapes tightly interlocked and tethered by a complex web of thin black lines"
+                        ][getLvl3(coup)],
+                        depth: [
+                            "a flat, non-objective interaction of pure surface planes",
+                            "subtle layered overlaps creating a sense of shallow pictorial space",
+                            "an infinite spiritual void with multiple receding layers of translucent circles"
+                        ][getLvl3(depth)],
+                        marks: [
+                            "tiny, fractured geometric ciphers and staccato mark-making",
+                            "rhythmic, controlled dots and precisely measured linear dashes",
+                            "sharp, thin-to-thick confident rhythmic lines and perfectly defined perimeters"
+                        ][getLvl3(readability)],
+                        atmosphere: [
+                            "a cool, intellectual atmosphere with somber, introspective blue tones",
+                            "a neutral, clear space of objective observation and pure light",
+                            "radiating a warm, golden spiritual glow and optimistic energy"
+                        ][getLvl3(sentiment)],
+                        paradigm: paradigm === 'oop' ? "anchored by monumental, static block-like structures" : "built from dynamic, sweeping arcs and continuous data-stream curves"
                     };
                 case 'vangogh':
                     return {
-                        complexity: comp > 0.8 ? "a violent, ecstatic explosion of swirling impasto, every millimeter vibrating with thick, restless, multi-directional dashes"
-                            : comp > 0.6 ? "rhythmic, flowing rivers of paint, creating a sense of constant movement and energetic growth"
-                                : comp > 0.4 ? "balanced energy, with confident patches of color and steady, visible brushwork rhythm"
-                                    : comp > 0.2 ? "mostly calm with long, serene horizontal strokes and occasional subtle dabs"
-                                        : "sparse, quiet strokes on a raw-looking base, representing total mental clarity",
-                        cohesion: coh > 0.75 ? "an immense gravitational vortex pulling all strokes into a tight, spiraling central sun" : "fragmented energy spread across the canvas in independent eddies",
-                        consistency: "intense complementary vibration of deep cyprus blues and radiant sunflower yellows",
-                        depth: depth > 0.5 ? "powerful receding spatial tunnels created by swirling directional perspective" : "thick, tactile surface tension with no background",
-                        marks: "tactile, heavy impasto dabs applied with high-pressure intensity"
+                        complexity: [
+                            "sparse, quiet strokes on a raw base, representing total mental clarity",
+                            "mostly calm with long, serene horizontal strokes and occasional subtle dabs",
+                            "balanced energy, with confident patches of color and steady brushwork rhythm",
+                            "rhythmic, flowing rivers of paint, creating constant movement and energetic growth",
+                            "a violent, ecstatic explosion of swirling impasto, every millimeter vibrating with restless dashes"
+                        ][getLvl5(comp)],
+                        cohesion: [
+                            "fragmented energy spread across the canvas in independent eddies",
+                            "a gentle central pull organizing the brushwork into a unified flow",
+                            "an immense gravitational vortex pulling all strokes into a tight, spiraling sun"
+                        ][getLvl3(coh)],
+                        consistency: [
+                            "a turbulent clash of unpredictable, high-contrast emotional hues",
+                            "a rich, varied palette of organic greens and warm ochres",
+                            "a disciplined, vibrating harmony of deep cyprus blues and radiant sunflower yellows"
+                        ][getLvl3(cons)],
+                        coupling: [
+                            "distinct patches of energy coexisting with clear physical separation",
+                            "brushstrokes overlapping at the edges in a loose, organic weave",
+                            "heavy impasto threads woven together in an unbreakable, textured knot"
+                        ][getLvl3(coup)],
+                        depth: [
+                            "thick, tactile surface tension that rejects background space",
+                            "gentle receding hills and layered sky creating moderate depth",
+                            "powerful receding spatial tunnels created by extreme directional perspective"
+                        ][getLvl3(depth)],
+                        marks: [
+                            "short, agitated, staccato marks applied with nervous energy",
+                            "standard directional dashes showing steady movement",
+                            "long, confident, flowing directional strokes with mature, grand gesture"
+                        ][getLvl3(readability)],
+                        atmosphere: [
+                            "somber and brooding, with heavy shadows and a world-weary air",
+                            "a calm, midday light with direct, honest observation",
+                            "bathed in a luminous, hopeful morning light with a sense of divine presence"
+                        ][getLvl3(sentiment)],
+                        paradigm: paradigm === 'oop' ? "framed by heavy, upright vertical cypress-like monuments" : "a continuous flow of liquid energy, like a winding field of wheat"
                     };
                 case 'monet':
                     return {
-                        complexity: comp > 0.8 ? "a shimmering, hyper-dense surface vibrating with ten thousand tiny dabs of pure, unmixed light and color"
-                            : comp > 0.6 ? "an intricate garden landscape of overlapping lily pads and bridge reflections with complex textures"
-                                : comp > 0.4 ? "a balanced impressionist view with rhythmic color patches and visible light flickering"
-                                    : comp > 0.2 ? "a soft, hazy dawn landscape with gentle washes of light and only a few subtle dabs"
-                                        : "an ethereal, almost abstract mist of a single morning hue, quiet and minimalist",
-                        cohesion: coh > 0.8 ? "a radiant central luminous core where all light converged into a blinding reflection on water"
-                            : coh > 0.6 ? "a soft focal point where light dabs form a visible cluster of energy"
-                                : coh > 0.4 ? "a gentle rhythmic balance with light spread in organized clusters"
-                                    : "fully diffused light spread evenly across the misty pond surface with no center",
-                        consistency: "harmonious pastel palette of translucent, overlapping tints of violet, rose, and sage",
-                        depth: depth > 0.5 ? "ethereal atmospheric perspective with soft receding water horizons" : "flat decorative surface of light reflections on water",
-                        marks: "soft, blurry, and overlapping short dabs of pure color applied with a light touch"
+                        complexity: [
+                            "an ethereal, almost abstract mist of a single morning hue, quiet and minimalist",
+                            "a soft, hazy dawn landscape with gentle washes of light and subtle dabs",
+                            "a balanced impressionist view with rhythmic color patches and flickering light",
+                            "an intricate garden landscape of overlapping lily pads and complex textures",
+                            "a shimmering, hyper-dense surface vibrating with ten thousand tiny dabs of pure light"
+                        ][getLvl5(comp)],
+                        cohesion: [
+                            "fully diffused light spread evenly across the misty pond with no focal point",
+                            "a gentle cluster of lilies providing a soft anchoring rhythm",
+                            "a radiant central core where all light converges into a single glowing reflection"
+                        ][getLvl3(coh)],
+                        consistency: [
+                            "a surprising variety of light-flickering accents that challenge the harmony",
+                            "a balanced interplay of warm and cool reflections",
+                            "a perfectly unified, harmonious wash of lavender, rose, and soft sage"
+                        ][getLvl3(cons)],
+                        coupling: [
+                            "soft, isolated clusters of color floating in a vast, misty void",
+                            "forms gently touching and sharing common reflected colors",
+                            "forms bleeding into each other at the boundaries, completely inseparable"
+                        ][getLvl3(coup)],
+                        depth: [
+                            "a flat, decorative surface of water reflections and floating petals",
+                            "a soft sense of recession through overlapping aquatic forms",
+                            "ethereal atmospheric perspective with multiple receding layers of mist"
+                        ][getLvl3(depth)],
+                        marks: [
+                            "tiny, flickering points of pure pigment that blur the vision",
+                            "medium-length dabs and horizontal strokes typical of water lilies",
+                            "soft, feathery, long sweeps of light color and gentle washes"
+                        ][getLvl3(readability)],
+                        atmosphere: [
+                            "cool, introspective twilight with muted, melancholic shadows",
+                            "the clear, steady light of a bright spring morning",
+                            "warm, optimistic afternoon sun diffused through a golden haze"
+                        ][getLvl3(sentiment)],
+                        paradigm: paradigm === 'oop' ? "structured by a stable, solid bridge-like horizontal axis" : "a flowing, formless stream of light and data without rigid anchors"
                     };
                 case 'dali':
                     return {
-                        complexity: comp > 0.8 ? "a nightmarish, hyper-detailed landscape of melting towers, distorted faces, and impossible interlocking mechanisms"
-                            : comp > 0.6 ? "a dense surrealist construction of warped perspectives and multiple melting icons"
-                                : comp > 0.4 ? "a balanced dreamscape with several melting objects and sharp, long shadows"
-                                    : comp > 0.2 ? "a vast, empty desert void with a single strange, isolated melting artifact"
-                                        : "a pure, flat infinite horizon under a single suspended floating orb, extremely sparse",
-                        cohesion: coh > 0.8 ? "a surreal dream-like convergence where all melting objects fuse into a single impossible central monument"
-                            : coh > 0.6 ? "a clear focal point formed by a cluster of distorted shapes emerging from the desert"
-                                : "objects floating in complete logical isolation in a vast desert vacuum",
-                        consistency: "theatrical, high-contrast lighting with deep, sharp shadows and vibrant, oversaturated desert hues",
-                        depth: depth > 0.5 ? "infinite receding horizon line with extreme, logically impossible spatial depth" : "flat, dream-like stage set with no background",
-                        marks: "hyper-realistic, sharp rendering of fluid and distorted forms"
+                        complexity: [
+                            "a pure, flat infinite horizon under a single suspended floating orb, extremely sparse",
+                            "a vast, empty desert void with a single strange, isolated melting artifact",
+                            "a balanced dreamscape with several melting objects and sharp, long shadows",
+                            "a dense surrealist construction of warped perspectives and multiple melting icons",
+                            "a nightmarish, hyper-detailed landscape of melting towers and impossible mechanisms"
+                        ][getLvl5(comp)],
+                        cohesion: [
+                            "multiple objects floating in complete logical isolation in a vast vacuum",
+                            "objects starting to orbit around a central strange occurrence",
+                            "a surreal convergence where all melting objects fuse into a single central monument"
+                        ][getLvl3(coh)],
+                        consistency: [
+                            "an eerie palette of clashing neon hues and unnatural, toxic shadows",
+                            "hyper-real colors that feel slightly off-balance and strange",
+                            "a controlled sequence of desert-earth tones and crystal-clear sky blues"
+                        ][getLvl3(cons)],
+                        coupling: [
+                            "sharp, self-contained objects casting long, independent shadows",
+                            "objects tethered by thin, impossible strings or stretching parts",
+                            "melting forms physically merging and collapsing into one another"
+                        ][getLvl3(coup)],
+                        depth: [
+                            "a theatrical flat stage set with a curtain-like foreground",
+                            "wide desert plains with several layers of receding visual depth",
+                            "infinite receding horizon line with logically impossible, deep spatial tunnels"
+                        ][getLvl3(depth)],
+                        marks: [
+                            "fractured, microscopic details that reveal hidden coded symbols",
+                            "sharp, standard oil-painting rendering with realistic texture",
+                            "ultra-sharp, academic brushwork with photographic exactitude"
+                        ][getLvl3(readability)],
+                        atmosphere: [
+                            "a somber, twilight atmosphere of impending decay and deep anxiety",
+                            "a mid-day dream, bright but unsettlingly quiet",
+                            "crisp, ultra-clear morning light with a sense of profound awakening"
+                        ][getLvl3(sentiment)],
+                        paradigm: paradigm === 'oop' ? "monumental, architectural structures rising like pillars of power" : "liquid, melting data-flows that reject any solid structural foundation"
                     };
                 case 'basquiat':
                     return {
-                        complexity: comp > 0.8 ? "an explosive urban chaos, hyper-dense layers of aggressive spray-paint, oil-stick words, and primitive symbols"
-                            : comp > 0.6 ? "intricate street-art layering of skeletal figures, scribbles, and heavy text fragments"
-                                : comp > 0.4 ? "a balanced expressionist wall of raw marks and primitive urban icons"
-                                    : comp > 0.2 ? "sparse markings, a single primitive figure on a plain, textured wall"
-                                        : "one single, bold, skeletal stroke on a raw background, extremely minimalist",
-                        cohesion: coh > 0.8 ? "commanded by a massive, central primitive crown icon that dominates the entire wall"
-                            : coh > 0.6 ? "a strong focal point where symbols and words cluster around a central figure"
-                                : "fully dispersed energy, chaotic markings spread like a street wall with no hierarchy",
-                        consistency: "clashing primary colors, dirty charcoal blacks, and layered spray-paint textures",
-                        depth: depth > 0.5 ? "heavily collaged layers of overpainting and scratched-away surfaces" : "flat, raw, immediate wall-like surface",
-                        marks: "expressive, childlike, and primal grease-crayon lines applied with raw speed"
+                        complexity: [
+                            "one single, bold, skeletal stroke on a raw background, extremely minimalist",
+                            "sparse markings, a single primitive figure on a plain, textured wall",
+                            "a balanced expressionist wall of raw marks and primitive urban icons",
+                            "intricate street-art layering of skeletal figures, scribbles, and text fragments",
+                            "explosive urban chaos, hyper-dense layers of spray-paint, oil-sticks, and symbols"
+                        ][getLvl5(comp)],
+                        cohesion: [
+                            "fully dispersed graffiti-energy with no discernible center or hierarchy",
+                            "a strong central axis with scrawled arrows pointing inward",
+                            "commanded by a massive, central primitive crown icon that dominates the space"
+                        ][getLvl3(coh)],
+                        consistency: [
+                            "a wild, chaotic riot of clashing spray-paint, charcoal, and neon streaks",
+                            "a gritty, urban palette of greys, browns, and street textures",
+                            "a disciplined clash of 3-4 raw primary tones against a black ground"
+                        ][getLvl3(cons)],
+                        coupling: [
+                            "raw, separate symbols and icons floating on a bare wall background",
+                            "scribbles and text fragments that overlap and interact organically",
+                            "layers of overpainting and crossed-out text covering every inch of the figure"
+                        ][getLvl3(coup)],
+                        depth: [
+                            "a primary, flat, immediate 2D wall surface with raw markings",
+                            "suggested depth through layering and scratching away paint",
+                            "heavy collaged layers of surfaces, showing historical depth through accumulation"
+                        ][getLvl3(depth)],
+                        marks: [
+                            "tiny, nervous scribbles and scratched-away, skeletal marks",
+                            "bold spray-paint drips and grease-crayon scratches",
+                            "aggressive, confident, and long gestural lines of oil-stick"
+                        ][getLvl3(readability)],
+                        atmosphere: [
+                            "brooding, political anger with dark, somber tones and skeletal anxieties",
+                            "urgent, raw street communication with high energy",
+                            "raw, celebratory urban energy — loud, proud, and unapologetic"
+                        ][getLvl3(sentiment)],
+                        paradigm: paradigm === 'oop' ? "heavily framed by solid, primitive block-like figures" : "a constant flow of aggressive scrawled text and data-symbols"
                     };
                 default:
                     return {
                         complexity: "balanced tension between order and chaos",
                         cohesion: "unified focal point",
                         consistency: "harmonious color distribution",
+                        coupling: "moderately connected elements",
                         depth: "subtle layered depth",
-                        marks: "confident and expressive marks"
+                        marks: "confident and expressive marks",
+                        atmosphere: "neutral and balanced mood",
+                        paradigm: "assembled from fundamental shapes"
                     };
             }
         };
@@ -153,8 +297,10 @@ Compositional energy: ${intensity}, representing code complexity (${comp.toFixed
 Core Structure: ${d.complexity}.
 Focal Point: ${d.cohesion}, reflecting cohesion (${coh.toFixed(2)}).
 Color & Tone: ${d.consistency}, reflecting consistency (${cons.toFixed(2)}).
+Atmosphere and Mood: ${d.atmosphere}, reflecting sentiment (${sentiment.toFixed(2)}).
 Spatial Feel: ${d.depth}, reflecting depth (${depth.toFixed(2)}).
-Forms and Brushwork: Rendered with ${d.marks} in a ${flow} rhythm.
+Connectivity: ${d.coupling}, reflecting coupling (${coup.toFixed(2)}).
+Forms and Brushwork: ${d.paradigm}, rendered with ${d.marks}.
 
 Theme: This is a visualization of a computer program's logic. Let the hidden architecture of the code emerge through the ${styleNames[resolvedStyle]} aesthetic.
 

@@ -96,35 +96,34 @@ export const ART_STYLE_INFO: Record<ArtStyle, StyleInfo> = {
 
 /**
  * Resolves 'auto' to the most fitting BaseArtStyle based on code metrics.
- *
- * Algorithm:
- * - bauhaus:  Low complexity + high consistency = clean, orderly code → geometric precision
- * - monet:    Positive sentiment + low-mid complexity + high readability = warm, gentle code → soft light
- * - dali:     FP paradigm OR (high coupling + low cohesion) = surreal data flows/deps → dreamscape
- * - basquiat: High complexity + low consistency = chaotic, messy code → raw urban chaos
- * - vangogh:  Default — passionate, energetic expression for everything else
+ * Uses a prioritized decision matrix reflecting the "Artist DNA" of the code.
  */
 export function resolveAutoStyle(metrics: CodeMetrics): BaseArtStyle {
-    const { complexity, consistency, sentiment, coupling, cohesion, readability, paradigm } = metrics;
+    const { complexity: cp, consistency: cs, sentiment: st, coupling: cl, cohesion: ch, readability: rd, depth: dp, paradigm: pd } = metrics;
 
-    // Pure abstraction, clean geometric code → Kandinsky
-    if (complexity < 0.3 && consistency > 0.6) return 'kandinsky';
+    // 1. Basquiat (Chaos & Raw Energy)
+    // - Extreme complexity or a mess of low-consistency spaghetti
+    if (cp > 0.8) return 'basquiat';
+    if (cp > 0.65 && cs < 0.35 && rd < 0.4) return 'basquiat';
 
-    // Highly consistent + low complexity + good readability → still Kandinsky
-    if (consistency > 0.75 && complexity < 0.45 && readability > 0.55) return 'kandinsky';
+    // 2. Kandinsky (Geometric Order & Absolute Abstraction)
+    // - Highly structured, consistent, and minimalist code
+    if (cp < 0.4 && cs > 0.7 && rd > 0.7) return 'kandinsky';
+    if (cs > 0.85 && cp < 0.5) return 'kandinsky';
 
-    // Positive, warm, readable code → Monet
-    if (sentiment > 0.65 && complexity < 0.6 && readability > 0.5) return 'monet';
+    // 3. Dalí (Surrealism & Infinite Flow)
+    // - High connectivity, functional data pipelines, or extreme nesting depth
+    if (pd === 'fp' && cl > 0.5 && dp > 0.4) return 'dali';
+    if (cl > 0.7 && ch < 0.4) return 'dali';
+    if (dp > 0.8) return 'dali';
 
-    // Functional paradigm, or complex dependency graph with low cohesion → Dalí
-    if (paradigm === 'fp' && coupling > 0.5) return 'dali';
-    if (coupling > 0.7 && cohesion < 0.35) return 'dali';
+    // 4. Monet (Soft Impressionism & Luminous Serenity)
+    // - Readable, high-level, and "pleasant" code flow
+    if (st > 0.6 && rd > 0.65 && cp < 0.55) return 'monet';
+    if (st > 0.8 && rd > 0.5) return 'monet';
 
-    // Very chaotic + low consistency → Basquiat
-    if (complexity > 0.72 && consistency < 0.35) return 'basquiat';
-    if (complexity > 0.8) return 'basquiat';
-
-    // Everything else → Van Gogh (passionate, energetic)
+    // 5. Van Gogh (Passionate Intensity & Rhythmic Energy)
+    // - Default for energetic or complex code that still maintains rhythmic consistency
     return 'vangogh';
 }
 
