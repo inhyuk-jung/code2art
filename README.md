@@ -27,6 +27,45 @@ Code2Art는 코드의 구조와 로직을 분석하여 거장들의 화풍으로
 
 ---
 
+## 📦 시작하기 (Get Started)
+
+Code2Art를 로컬 환경에서 실행하고 자신만의 코드를 예술로 변환해보세요.
+
+### 1. 사전 준비 (Prerequisites)
+- **Node.js**: v18.0.0 이상 권장
+- **NPM**: Node.js 설치 시 자동 포함 (또는 Yarn/PNPM)
+- **API Key**: 렌더링을 위해 OpenAI(DALL-E 3) 또는 Google Gemini API 키가 필요합니다.
+
+### 2. 설치 및 설정 (Installation)
+저장소를 클론하고 의존성을 설치합니다.
+
+```bash
+# 1. 저장소 클론
+git clone https://github.com/inhyuk-jung/code2art.git
+cd code2art
+
+# 2. 의존성 설치
+npm install
+```
+
+### 3. 로컬 실행 (Running Locally)
+개발 서버를 실행하여 브라우저에서 확인합니다.
+
+```bash
+npm run dev
+```
+서버가 시작되면 [http://localhost:3000](http://localhost:3000) 접속하여 서비스를 이용할 수 있습니다. 화면 하단의 입력창에 본인의 API Key(OpenAI 또는 Gemini)를 직접 입력하여 사용하세요.
+
+### 4. 빌드 및 배포 (Build)
+프로덕션용 빌드를 생성하려면 다음 명령어를 사용하세요.
+
+```bash
+npm run build
+npm run start
+```
+
+---
+
 ## 🛠️ 예시 코드 (Test Cases)
 
 ### 1. 정제된 추상 아키텍처 (칸딘스키 / 모네 추천)
@@ -182,15 +221,6 @@ function processUglyLegacyChaos(a, b, c, d, e, f) {
 var result = processUglyLegacyChaos(15, 10, true, [], {}, function(x){ return x > 0; });
 console.log("Chaos result: " + result);
 ```
-
----
-
-## 📦 시작하기 (Get Started)
-
-1. 저장소를 클론합니다.
-2. `npm install` 로 의존성을 설치합니다.
-3. `.env.local` 파일에 `NEXT_PUBLIC_OPENAI_KEY` 또는 `NEXT_PUBLIC_GEMINI_KEY`를 설정합니다.
-4. `npm run dev` 로 로컬 개발 서버를 실행합니다.
 
 ---
 
