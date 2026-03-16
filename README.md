@@ -25,6 +25,29 @@ Code2Art는 코드의 구조와 로직을 분석하여 거장들의 화풍으로
 - **애니메이팅 아트봇**: 작품이 탄생하는 과정을 3단계(분석-페인팅-감상)로 보여주는 귀여운 로봇 애니메이션을 제공합니다.
 - **AI 도슨트 해설**: 생성된 작품이 코드의 어떤 특징(Complexity, Readability 등)을 반영하고 있는지 예술 비평가의 시선으로 해설해 줍니다.
 
+### 4. 고화질 AI 렌더링
+- **최첨단 모델 연동**: OpenAI의 **DALL-E 3** 및 Google의 **Gemini 3.1 Flash**를 지원하여 미술관 퀄리티의 이미지를 즉각적으로 생성합니다.
+
+---
+
+## 🖼️ 데모 (Demonstration)
+
+Code2Art가 코드의 품질(지표)을 어떻게 시각적 예술로 승화시키는지 확인해보세요.
+
+### ✅ Good Code Artifacts (Clean & Modular)
+가독성이 높고 복잡도가 낮은 코드는 균형 잡힌 구도와 명확한 색채로 표현됩니다.
+
+| 예시 1  | 예시 2  |
+| :---: | :---: |
+| ![Good 1](./assets/good_1.png) | ![Good 2](./assets/good_2.png) |
+
+### ❌ Bad Code Artifacts (Chaos & Spaghetti)
+복잡도가 높고 결합도가 강한 코드는 파괴적인 에너지와 거친 질감의 낙서로 표현됩니다.
+
+| 예시 1  | 예시 2  |
+| :---: | :---: |
+| ![Bad 1](./assets/bad_1.png) | ![Bad 2](./assets/bad_2.png) |
+
 ---
 
 ## 📦 시작하기 (Get Started)
