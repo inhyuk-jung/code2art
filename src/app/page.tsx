@@ -54,13 +54,10 @@ console.log(catalyst.compose(12));
   const [language, setLanguage] = useState<SupportedLanguage>('typescript');
   const [artStyle, setArtStyle] = useState<ArtStyle>('auto');
 
-  // API 키 상태 (보안을 위해 초기값은 빈 문자열)
-  const [openaiKey, setOpenaiKey] = useState('');
-  const [geminiKey, setGeminiKey] = useState('');
-  const [aiProvider, setAiProvider] = useState<'openai' | 'gemini'>('gemini');
+  const hasGemini = !!process.env.NEXT_PUBLIC_GEMINI_KEY;
+  const hasOpenAI = !!process.env.NEXT_PUBLIC_OPENAI_KEY;
 
-  const apiKey = aiProvider === 'openai' ? openaiKey : geminiKey;
-  const setApiKey = aiProvider === 'openai' ? setOpenaiKey : setGeminiKey;
+  const [aiProvider, setAiProvider] = useState<'openai' | 'gemini'>(hasGemini ? 'gemini' : 'openai');
 
   const handleAnalyze = async () => {
     setStatus('analyzing');
@@ -145,11 +142,9 @@ console.log(catalyst.compose(12));
               <AiGenerator
                 metrics={metrics}
                 artStyle={artStyle}
-                apiKey={apiKey}
                 aiProvider={aiProvider}
-                setApiKey={setApiKey}
                 setAiProvider={setAiProvider}
-                autoGenerateOnLoad={!!apiKey}
+                autoGenerateOnLoad={true}
               />
 
               {/* Code Metrics — collapsed by default */}
@@ -191,8 +186,6 @@ console.log(catalyst.compose(12));
               setLanguage={setLanguage}
               artStyle={artStyle}
               setArtStyle={setArtStyle}
-              apiKey={apiKey}
-              setApiKey={setApiKey}
               aiProvider={aiProvider}
               setAiProvider={setAiProvider}
               onAnalyze={handleAnalyze}

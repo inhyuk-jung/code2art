@@ -159,8 +159,6 @@ interface CodeEditorProps {
     setLanguage: (lang: SupportedLanguage) => void;
     artStyle: ArtStyle;
     setArtStyle: (style: ArtStyle) => void;
-    apiKey: string;
-    setApiKey: (key: string) => void;
     aiProvider: 'openai' | 'gemini';
     setAiProvider: (provider: 'openai' | 'gemini') => void;
     onAnalyze: () => void;
@@ -171,7 +169,6 @@ export default function CodeEditor({
     code, setCode,
     language, setLanguage,
     artStyle, setArtStyle,
-    apiKey, setApiKey,
     aiProvider, setAiProvider,
     onAnalyze, isAnalyzing
 }: CodeEditorProps) {
@@ -179,10 +176,13 @@ export default function CodeEditor({
     const [error, setError] = useState<string | null>(null);
     const selectedStyle = ART_STYLE_INFO[artStyle];
 
+    const hasGemini = !!process.env.NEXT_PUBLIC_GEMINI_KEY;
+    const hasOpenAI = !!process.env.NEXT_PUBLIC_OPENAI_KEY;
+
     const handleAnalyzeClick = () => {
         setError(null);
-        if (!apiKey.trim()) {
-            setError(aiProvider === 'openai' ? "OpenAI API Key가 입력되지 않았습니다." : "Gemini API Key가 입력되지 않았습니다.");
+        if (!hasGemini && !hasOpenAI) {
+            setError("설정된 AI 모델이 없습니다. .env.local 설정을 확인해주세요.");
             return;
         }
         onAnalyze();
@@ -292,7 +292,7 @@ export default function CodeEditor({
                 <div className="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full" />
             </div>
 
-            {/* Bottom Row: API Key + Generate Button */}
+            {/* Bottom Row: AI Model Selection + Generate Button */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-2">
                 <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
                     <select
@@ -300,16 +300,10 @@ export default function CodeEditor({
                         onChange={(e) => setAiProvider(e.target.value as 'openai' | 'gemini')}
                         className="neo-box-sm px-3 py-2 text-sm bg-white cursor-pointer font-bold"
                     >
-                        <option value="gemini">Gemini (Flash) [더 잘그려요!]</option>
-                        <option value="openai">OpenAI (DALL-E 3)</option>
+                        {hasGemini && <option value="gemini">Gemini (Flash) [더 잘그려요!]</option>}
+                        {hasOpenAI && <option value="openai">OpenAI (DALL-E 3)</option>}
+                        {!hasGemini && !hasOpenAI && <option value="">설정된 모델 없음</option>}
                     </select>
-                    <input
-                        type="password"
-                        placeholder={aiProvider === 'openai' ? "OpenAI API Key (sk-...)" : "Gemini API Key (AIza...)"}
-                        value={apiKey}
-                        onChange={(e) => { setApiKey(e.target.value); setError(null); }}
-                        className="neo-box-sm px-4 py-2 flex-grow text-sm placeholder:text-gray-400 w-full md:w-64 focus:outline-none"
-                    />
                 </div>
 
                 <motion.button

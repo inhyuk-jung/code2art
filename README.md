@@ -71,13 +71,22 @@ cd code2art
 npm install
 ```
 
-### 3. 로컬 실행 (Running Locally)
+### 3. 환경 변수 설정 (Environment Variables) - **필수**
+서비스 가동을 위해 반드시 `.env.local` 파일을 생성하고 아래 내용을 입력해야 합니다. UI 내 직접 입력 방식은 제거되었습니다.
+
+```bash
+# .env.local 예시
+NEXT_PUBLIC_OPENAI_KEY=your_openai_api_key_here
+NEXT_PUBLIC_GEMINI_KEY=your_gemini_api_key_here
+```
+
+### 4. 로컬 실행 (Running Locally)
 개발 서버를 실행하여 브라우저에서 확인합니다.
 
 ```bash
 npm run dev
 ```
-서버가 시작되면 [http://localhost:3000](http://localhost:3000) 접속하여 서비스를 이용할 수 있습니다. 화면 하단의 입력창에 본인의 API Key(OpenAI 또는 Gemini)를 직접 입력하여 사용하세요.
+서버가 시작되면 [http://localhost:3000](http://localhost:3000) 접속하여 서비스를 이용할 수 있습니다. 설정된 환경 변수에 따라 사용 가능한 모델(Gemini 또는 OpenAI)이 자동으로 활성화됩니다.
 
 ### 4. 빌드 및 배포 (Build)
 프로덕션용 빌드를 생성하려면 다음 명령어를 사용하세요.
