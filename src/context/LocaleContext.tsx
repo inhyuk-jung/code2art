@@ -14,7 +14,7 @@ const translations: Record<Language, Record<string, string>> = {
     ko: {
         'nav.title': 'Is My Code Art?',
         'nav.subtitle': '당신의 코드는 예술이 될 준비가 되었나요?',
-        'nav.description': '코드의 구조와 로직을 분석하여 거장들의 화풍으로 재해석된 고화질 추상화를 생성해주는 혁신적인 서비스입니다.',
+        'nav.description': '당신의 코드는 예술적일까요? 진짜 예술.',
         'nav.footer': '100% 로컬 프로세싱. 제로 서버 업로드.',
         'editor.placeholder': '// 여기에 코드를 붙여넣으세요...',
         'editor.analyze': '작품으로 변환하기',
@@ -69,7 +69,7 @@ const translations: Record<Language, Record<string, string>> = {
     en: {
         'nav.title': 'Is My Code Art?',
         'nav.subtitle': 'Is your code ready to become art?',
-        'nav.description': 'An innovative service that analyzes the structure and logic of your code to generate high-definition abstract art reinterpreted through the styles of masters.',
+        'nav.description': 'Is your code artistic? Real Art.',
         'nav.footer': '100% Local Processing. Zero Server Uploads.',
         'editor.placeholder': '// Paste your code here...',
         'editor.analyze': 'Turn into Art',
