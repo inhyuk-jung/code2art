@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ choices: response.choices });
     } catch (err: any) {
-        const message = err?.error?.message ?? err?.message ?? '도슨트 생성 실패';
+        const message = err?.error?.message ?? err?.message ?? 'Docent generation failed';
         return NextResponse.json({ error: message }, { status: 500 });
     }
 }

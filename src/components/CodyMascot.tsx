@@ -2,12 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { Bot, Lightbulb, PenTool } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 interface CodyMascotProps {
     status: 'idle' | 'analyzing' | 'success' | 'error';
 }
 
 export default function CodyMascot({ status }: CodyMascotProps) {
+    const { t } = useLocale();
     return (
         <div className="flex flex-col items-center justify-center p-6neo-box-sm bg-accent aspect-square max-w-[200px] mx-auto rounded-full overflow-visible relative border-4 border-black neo-box">
 
@@ -17,7 +19,7 @@ export default function CodyMascot({ status }: CodyMascotProps) {
                     animate={{ opacity: 1, y: 0 }}
                     className="absolute -top-12 bg-white px-4 py-2 border-2 border-black rounded-xl font-bold text-sm z-10 whitespace-nowrap"
                 >
-                    Hmm... Let's see...
+                    {t('bot.analyzing_text')}
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b-2 border-r-2 border-black rotate-45" />
                 </motion.div>
             )}
@@ -28,7 +30,7 @@ export default function CodyMascot({ status }: CodyMascotProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     className="absolute -top-12 bg-white px-4 py-2 border-2 border-black rounded-xl font-bold text-sm z-10 whitespace-nowrap"
                 >
-                    Magnificent! ✨
+                    {t('bot.magnificent')}
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b-2 border-r-2 border-black rotate-45" />
                 </motion.div>
             )}

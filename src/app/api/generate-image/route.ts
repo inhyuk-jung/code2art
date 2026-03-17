@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ data: response.data });
     } catch (err: any) {
-        const message = err?.error?.message ?? err?.message ?? '이미지 생성 실패';
+        const message = err?.error?.message ?? err?.message ?? 'Image generation failed';
         return NextResponse.json({ error: message }, { status: 500 });
     }
 }

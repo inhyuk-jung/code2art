@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocale } from '@/context/LocaleContext';
 
 interface ArtBotProps {
     phase: 0 | 1 | 2; // 0 = confirming, 1 = painting, 2 = writing
@@ -17,7 +18,7 @@ const Sparkle = ({ x, y, delay }: { x: number; y: number; delay: number }) => (
     >✦</motion.text>
 );
 
-// Phase 1: Robot choosing a palette (화풍 확정 → 그림 그리는 중)
+// Phase 1: Robot choosing a palette (Drawing in progress)
 function PaintingBot() {
     return (
         <svg viewBox="0 0 160 200" width="160" height="200">
@@ -95,7 +96,7 @@ function PaintingBot() {
     );
 }
 
-// Phase 0: Robot thinking/choosing (화풍 확정)
+// Phase 0: Robot thinking/choosing (Style Confirmation)
 function ThinkingBot() {
     return (
         <svg viewBox="0 0 160 200" width="160" height="200">
@@ -145,7 +146,7 @@ function ThinkingBot() {
     );
 }
 
-// Phase 2: Robot writing docent text (도슨트 작성 중)
+// Phase 2: Robot writing docent text (Docent creation in progress)
 function WritingBot() {
     return (
         <svg viewBox="0 0 160 200" width="160" height="200">
@@ -221,14 +222,16 @@ function WritingBot() {
     );
 }
 
-const phaseInfo = [
-    { num: 1, label: '화풍 확정', sub: '어떤 화풍으로 그릴지 고르고 있어요!' },
-    { num: 2, label: '그림 그리는 중', sub: '열심히 작품을 완성하고 있어요!' },
-    { num: 3, label: '도슨트 작성 중', sub: '작품에 대한 해설을 쓰고 있어요!' },
-];
-
 export default function ArtBot({ phase }: ArtBotProps) {
-    // phase: 0 = 화풍 확정, 1 = 그림 그리는 중, 2 = 도슨트 작성 중
+    const { t } = useLocale();
+
+    const phaseInfo = [
+        { num: 1, label: t('bot.phase1.label'), sub: t('bot.phase1.sub') },
+        { num: 2, label: t('bot.phase2.label'), sub: t('bot.phase2.sub') },
+        { num: 3, label: t('bot.phase3.label'), sub: t('bot.phase3.sub') },
+    ];
+
+    // phase: 0 = thinking/style confirm, 1 = painting, 2 = writing docent
     const currentStep = phase + 1;
     const info = phaseInfo[currentStep - 1];
 
