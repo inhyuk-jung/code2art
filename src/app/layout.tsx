@@ -15,6 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Is My Code Art? | Code2Art",
   description: "Transform your code into generative modern art.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
